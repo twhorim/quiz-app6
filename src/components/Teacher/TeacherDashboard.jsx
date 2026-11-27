@@ -21,12 +21,17 @@ export default function TeacherDashboard() {
   const [selectedStudent, setSelectedStudent] = useState(null)
   const [syncStatus, setSyncStatus] = useState(null)
 
+  // Direct spreadsheet view URL
+  const [sheetViewUrl, setSheetViewUrl] = useState(
+    localStorage.getItem('teacher_custom_sheet_url') || config.spreadsheetViewUrl || 'https://sheets.google.com'
+  )
+
   // Load students data: tries Google Sheet first, falls back to LocalStorage
   const loadData = async () => {
     setIsLoading(true)
     let sheetDataLoaded = false
 
-    // 1. Try to fetch from Google Sheet
+    // 1. Try to fetch from Google Sheet Web App (doGet)
     if (config.googleSheetUrl) {
       try {
         const res = await fetch(config.googleSheetUrl, { method: 'GET' })
@@ -39,7 +44,7 @@ export default function TeacherDashboard() {
           }
         }
       } catch (err) {
-        // Fallback silently
+        console.warn('Google Sheet fetch error:', err)
       }
     }
 
@@ -78,6 +83,19 @@ export default function TeacherDashboard() {
     navigate('/')
   }
 
+  // Edit custom spreadsheet URL
+  const handleEditSheetUrl = () => {
+    const input = window.prompt(
+      '선생님의 구글 스프레드시트 주소(URL)를 입력해 주세요:\n(예: https://docs.google.com/spreadsheets/d/시트ID/edit)',
+      sheetViewUrl
+    )
+    if (input && input.trim()) {
+      localStorage.setItem('teacher_custom_sheet_url', input.trim())
+      setSheetViewUrl(input.trim())
+      alert('스프레드시트 주소가 설정되었습니다!')
+    }
+  }
+
   // Clear all data
   const handleClearAll = () => {
     if (window.confirm('이 기기에 저장된 모든 학생 기록을 초기화하시겠습니까?')) {
@@ -92,11 +110,6 @@ export default function TeacherDashboard() {
     seedSampleData()
     loadData()
     alert('가상 학생 3명(김민준, 이서연, 홍길동)의 학습 데이터가 생성되었습니다!')
-  }
-
-  // Open Google Sheet in new tab
-  const handleOpenGoogleSheet = () => {
-    window.open('https://sheets.google.com', '_blank')
   }
 
   // Test Google Sheet connection
@@ -114,7 +127,10 @@ export default function TeacherDashboard() {
 
     if (success !== false) {
       setSyncStatus('success')
-      setTimeout(() => setSyncStatus(null), 4000)
+      setTimeout(() => {
+        setSyncStatus(null)
+        loadData()
+      }, 2000)
     } else {
       setSyncStatus('fail')
       setTimeout(() => setSyncStatus(null), 4000)
@@ -234,7 +250,7 @@ export default function TeacherDashboard() {
       {/* Top Header */}
       <div className="td-header card">
         <div className="td-header-left">
-          <span className="badge badge-accent">선생님 관리자 모드</span>
+          <span className="badge badge-accent">선생님 관리자 모드 · {config.appVersion}</span>
           <h1 className="td-title">🎓 학생 학습 결과 대시보드</h1>
           <p className="td-desc">
             학생들의 차시별 형성평가 점수, 이해도 신호등, 성찰 내용 및 단원평가 결과를 확인합니다.
@@ -250,7 +266,7 @@ export default function TeacherDashboard() {
           <div className="stat-pill">
             <span className="stat-label">데이터 소스</span>
             <span className="stat-val font-bold text-primary">
-              {dataSource === 'sheet' ? '☁️ 구글 시트 연동' : '💻 이 기기 로컬 저장소'}
+              {dataSource === 'sheet' ? '☁️ 구글 시트 실시간 연동' : '💻 이 기기 로컬 저장소'}
             </span>
           </div>
 
@@ -263,9 +279,25 @@ export default function TeacherDashboard() {
       {/* Action Toolbar */}
       <div className="td-toolbar card">
         <div className="toolbar-left">
-          <button className="btn btn-accent" onClick={handleOpenGoogleSheet}>
-            📊 구글 스프레드시트 열기
-          </button>
+          {/* Direct Link to Google Spreadsheet */}
+          <div className="sheet-open-group">
+            <a
+              href={sheetViewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-accent btn-sheet-link"
+            >
+              📊 구글 스프레드시트 열기 ↗
+            </a>
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={handleEditSheetUrl}
+              title="내 구글 시트 주소 직접 입력"
+            >
+              ⚙️ 주소설정
+            </button>
+          </div>
+
           <button className="btn btn-primary" onClick={handleExportCSV} disabled={students.length === 0}>
             📥 엑셀(CSV) 다운로드
           </button>
@@ -277,7 +309,7 @@ export default function TeacherDashboard() {
           </button>
 
           {syncStatus === 'sending' && <span className="sync-msg text-info">전송 중...</span>}
-          {syncStatus === 'success' && <span className="sync-msg text-success">✅ 시트 전송 성공!</span>}
+          {syncStatus === 'success' && <span className="sync-msg text-success">✅ 시트 전송 성공! (시트 확인)</span>}
           {syncStatus === 'fail' && <span className="sync-msg text-error">❌ 전송 실패 (URL 확인)</span>}
         </div>
 
@@ -296,16 +328,24 @@ export default function TeacherDashboard() {
         {students.length === 0 ? (
           <div className="td-empty-box">
             <span className="empty-icon">📂</span>
-            <h3>현재 이 기기에 표시할 학생 데이터가 없습니다.</h3>
-            <p className="empty-explanation">
-              💡 <strong>왜 데이터가 바로 안 보이나요?</strong><br />
-              학생들이 <strong>각자의 태블릿 기기</strong>에서 제출한 결과는 학생 기기가 아니라 <strong>선생님의 구글 스프레드시트</strong>에 실시간으로 모이고 있습니다.<br />
-              상단의 <strong>[📊 구글 스프레드시트 열기]</strong> 버튼을 누르시면 학생 전원의 결과가 모인 엑셀 시트를 바로 확인하실 수 있습니다.
-            </p>
+            <h3>현재 대시보드 표에 표시할 학생 데이터가 없습니다.</h3>
+            <div className="empty-explanation">
+              <p>💡 <strong>학생들이 제출한 결과는 어디에 있나요?</strong></p>
+              <ul>
+                <li>학생들이 각자의 태블릿에서 제출한 기록은 <strong>선생님의 구글 스프레드시트</strong>로 모이고 있습니다.</li>
+                <li>위의 <strong>[📊 구글 스프레드시트 열기 ↗]</strong> 링크를 누르시면 학생 전원의 결과가 모인 시트가 새 창으로 바로 열립니다.</li>
+                <li>대시보드 기능(표, 모달, 엑셀 다운로드)을 시험해 보시려면 아래 <strong>[🧪 가상 학생 3명 데이터 생성해보기]</strong> 버튼을 클릭해 보세요!</li>
+              </ul>
+            </div>
             <div className="empty-actions mt-md">
-              <button className="btn btn-accent btn-lg" onClick={handleOpenGoogleSheet}>
-                📊 구글 스프레드시트 확인하기
-              </button>
+              <a
+                href={sheetViewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-accent btn-lg"
+              >
+                📊 구글 스프레드시트 확인하기 ↗
+              </a>
               <button className="btn btn-primary btn-lg" onClick={handleSeedSamples}>
                 🧪 가상 학생 3명 데이터 생성해보기
               </button>
