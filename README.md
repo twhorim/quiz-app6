@@ -1,16 +1,86 @@
-# React + Vite
+# 🧪 알고리즘 랩 (Algorithm Lab)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> **2022 개정 교육과정 중학교 정보과 '알고리즘과 프로그래밍' 단원 실감형 웹앱**  
+> 블록을 끌고, 슬라이더를 움직이며 알고리즘의 원리를 직접 체험하는 학생 참여형 학습 도구입니다.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📌 주요 특징
 
-## React Compiler
+- **1인 1기기 맞춤**: 태블릿 가로(최소 1024×768) 및 노트북 최적화
+- **간편한 로그인**: 번거로운 회원가입 없이 **학번 4자리(예: 1315) + 성명**만으로 바로 시작
+- **체계적인 6단계 차시 흐름**: 학습 목표 ➔ 개념 카드 ➔ 탐구 활동 ➔ 형성평가 ➔ 이해도 신호등(🟢🟡🔴) ➔ 한 줄 성찰
+- **실감형 차시별 탐구 활동**:
+  - **1차시**: 🤖 격자 로봇 길 안내하기 (명령 블록 조립 + 단계별 장애물 회피 주행)
+  - **2차시**: 🔀 조건 실험실 (온도·점수 슬라이더에 따른 순서도 실시간 분기 + 반복 루프)
+  - **3차시**: 📦 변수 상자와 리스트 창고 (값 덮어쓰기 애니메이션 + 과일 리스트 정렬/추가/삭제)
+  - **4차시**: 🚀 미로 탈출 블록 코딩 (순차·선택·반복 구조를 결합한 미로 탈출 자율 프로그램)
+- **단원 마무리 종합 평가**: 5문항 종합 퀴즈 + 서술형 과제 + **오답 다시 풀기(Retry)** 지원
+- **실시간 이중 저장 시스템**:
+  1. **기기 내부(LocalStorage)**: 인터넷이 불안정해도 학생 기기에 안전하게 자동 보관
+  2. **구글 스프레드시트(Apps Script Web App)**: 학생이 제출하는 즉시 선생님의 구글 시트에 가로 1행씩 실시간 자동 수합
+- **선생님 전용 결과 대시보드 (`/teacher`)**:
+  - 비밀번호 **`8688`** 보안 잠금
+  - 전체 학생 제출 현황 표(Table) 한눈에 확인
+  - **한글 엑셀 호환 CSV 파일 다운로드** 기능
+  - 구글 시트 연동 테스트 및 테스트 데이터 초기화 기능 지원
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 📚 단원 및 차시 구성
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+| 차시 | 주제 | 핵심 탐구 활동 |
+|:---:|---|---|
+| **1차시** | 문제 분해와 알고리즘 | 명령 블록(앞으로, 좌회전, 우회전)으로 로봇 이동 시뮬레이션 |
+| **2차시** | 순차·선택·반복 구조 | 슬라이더 조절로 순서도(Flowchart) 참/거짓 경로 실시간 하이라이트 |
+| **3차시** | 변수와 리스트 | 단일 값을 덮어쓰는 변수 상자 & 여러 값을 순서대로 담는 리스트 창고 |
+| **4차시** | 간단한 프로그램 만들기 | 제어 구조와 변수를 결합하여 미로를 탈출하는 블록 코딩 조립 및 주행 |
+| **마무리** | 단원 종합 평가 | 객관식/OX/단답 5문항 + 일상 속 구조 적용 서술형 1문항 |
+
+---
+
+## 🔒 선생님 전용 대시보드 접속 안내
+
+- **접속 경로**: 
+  - 시작 화면 하단의 **[🔒 선생님 결과 확인]** 버튼 클릭
+  - 또는 좌측 사이드바 하단의 **[🔒 선생님 결과 확인]** 링크 클릭
+  - URL 직접 접속: `/#/teacher`
+- **관리자 비밀번호**: **`8688`**
+
+---
+
+## 📊 구글 스프레드시트 연동 설정
+
+선생님의 구글 시트와 연동하려면 `src/config.js` 파일에 Apps Script 웹 앱 배포 URL을 입력합니다:
+
+```javascript
+// src/config.js
+export const config = {
+  googleSheetUrl: 'https://script.google.com/macros/s/AKfycb.../exec',
+};
+```
+
+---
+
+## 💻 로컬 개발 및 빌드
+
+```bash
+# 의존성 설치
+npm install
+
+# 로컬 개발 서버 실행 (localhost:5173)
+npm run dev
+
+# 프로덕션 빌드 (Vercel 배포용 dist 생성)
+npm run build
+```
+
+---
+
+## 🛠️ 기술 스택
+
+- **Frontend**: React 19, Vite, React Router DOM (HashRouter)
+- **Drag & Drop**: `@dnd-kit/core`, `@dnd-kit/sortable`
+- **Styling**: Pure CSS Design System (CSS Custom Properties)
+- **Deployment**: GitHub (`Parkhorim/com-quiz2`), Vercel
+- **Cloud Sync**: Serverless Google Apps Script Web App
