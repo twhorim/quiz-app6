@@ -1,0 +1,153 @@
+.records-screen {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.records-screen .records-header {
+  margin-bottom: var(--space-xl);
+}
+
+.records-screen .records-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.records-screen .records-header p {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+}
+
+/* Lesson record cards */
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.record-card {
+  transition: transform 0.15s ease;
+}
+
+.record-card:hover {
+  transform: translateY(-2px);
+}
+
+.record-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.record-card-header .record-icon {
+  font-size: 36px;
+}
+
+.record-card-header .record-title-area {
+  flex: 1;
+}
+
+.record-card-header .record-lesson-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.record-card-header .record-lesson-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.record-card .record-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.record-card .record-stat {
+  text-align: center;
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.record-card .record-stat .stat-label {
+  font-size: 13px;
+  color: var(--color-text-light);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.record-card .record-stat .stat-value {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.record-card .record-stat .stat-value.score-high {
+  color: var(--color-success);
+}
+
+.record-card .record-stat .stat-value.score-mid {
+  color: var(--color-accent);
+}
+
+.record-card .record-stat .stat-value.score-low {
+  color: var(--color-error);
+}
+
+.record-card .record-reflection {
+  padding: var(--space-md);
+  background: var(--color-primary-bg);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+.record-card .record-reflection .reflection-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.record-card .record-date {
+  margin-top: var(--space-sm);
+  font-size: 13px;
+  color: var(--color-text-light);
+  text-align: right;
+}
+
+/* Not completed state */
+.record-card .not-completed {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--color-text-light);
+  font-size: 16px;
+}
+
+/* Final assessment section */
+.final-record-card {
+  border: 2px solid var(--color-accent);
+}
+
+.final-record-card .record-card-header .record-lesson-num {
+  color: var(--color-accent-dark);
+}
+
+/* Empty state */
+.records-empty {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--color-text-secondary);
+}
+
+.records-empty .empty-icon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: var(--space-md);
+}

@@ -1,0 +1,51 @@
+.learning-objective {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.objective-card {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  padding: var(--space-2xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.objective-icon {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.objective-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.objective-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  padding: 6px 16px;
+  border-radius: 999px;
+}
+
+.objective-text {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  word-break: keep-all;
+}
+
+.objective-btn {
+  margin-top: var(--space-md);
+  width: 100%;
+  max-width: 280px;
+}

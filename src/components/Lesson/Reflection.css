@@ -1,0 +1,74 @@
+.reflection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+.reflection-card {
+  max-width: 520px;
+  width: 100%;
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.reflection-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.reflection-desc {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  word-break: keep-all;
+}
+
+.reflection-input-wrap {
+  position: relative;
+}
+
+.reflection-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--space-md);
+  font-size: 18px;
+  font-family: inherit;
+  line-height: 1.6;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.reflection-textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.reflection-textarea::placeholder {
+  color: var(--color-text-light);
+}
+
+.reflection-count {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+.reflection-submit {
+  align-self: center;
+  min-width: 200px;
+}
+
+.reflection-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

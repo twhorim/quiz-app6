@@ -1,0 +1,150 @@
+.unit-map {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.unit-map .welcome-header {
+  margin-bottom: var(--space-xl);
+}
+
+.unit-map .welcome-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.unit-map .welcome-header p {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+}
+
+/* Lesson grid */
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.lesson-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.lesson-card .lesson-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.lesson-card .lesson-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.lesson-card .lesson-info {
+  flex: 1;
+}
+
+.lesson-card .lesson-number {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+
+.lesson-card .lesson-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.lesson-card .lesson-status {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+}
+
+.lesson-card .lesson-objective {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.lesson-card .lesson-score {
+  margin-top: var(--space-md);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+/* Final card */
+.final-card {
+  text-align: center;
+  padding: var(--space-xl);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.final-card:hover:not(.disabled) {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.final-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.final-card .final-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.final-card .final-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.final-card .final-desc {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+/* Progress bar */
+.progress-section {
+  margin-bottom: var(--space-xl);
+}
+
+.progress-bar-container {
+  background: var(--color-border);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  margin-top: var(--space-sm);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.progress-label {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
