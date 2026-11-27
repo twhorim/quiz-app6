@@ -1,9 +1,10 @@
 import { lessons } from '../../data/lessons';
-import { getStudentData } from '../../utils/storage';
+import { getStudentData, getSession } from '../../utils/storage';
 import './RecordsScreen.css';
 
 function RecordsScreen() {
   const studentData = getStudentData();
+  const session = getSession();
 
   const getUnderstandingEmoji = (level) => {
     if (level === 'green') return '🟢';
@@ -38,8 +39,8 @@ function RecordsScreen() {
   return (
     <div className="records-screen animate-fade-in">
       <div className="records-header">
-        <h1>📊 학습 기록</h1>
-        <p>지금까지의 학습 여정을 확인해 보세요.</p>
+        <h1>📊 {session?.name ? `${session.name} 학생의 학습 기록` : '학습 기록'}</h1>
+        <p>{session?.studentId ? `[학번 ${session.studentId}] ` : ''}지금까지의 학습 여정을 확인해 보세요.</p>
       </div>
 
       {!hasAnyRecord ? (

@@ -3,16 +3,38 @@ import { setSession } from '../../utils/storage';
 import './StartScreen.css';
 
 function StartScreen({ onLogin }) {
-  const [classCode, setClassCode] = useState('');
-  const [studentNum, setStudentNum] = useState('');
+  const [studentId, setStudentId] = useState('');
+  const [name, setName] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleStudentIdChange = (e) => {
+    // Only allow numbers and max 4 digits
+    const val = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+    setStudentId(val);
+    if (errorMsg) setErrorMsg('');
+  };
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    if (errorMsg) setErrorMsg('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const trimmedClass = classCode.trim();
-    const trimmedNum = studentNum.trim();
-    if (!trimmedClass || !trimmedNum) return;
-    setSession(trimmedClass, trimmedNum);
-    onLogin({ classCode: trimmedClass, studentNum: trimmedNum });
+    const trimmedId = studentId.trim();
+    const trimmedName = name.trim();
+
+    if (!trimmedId || trimmedId.length !== 4) {
+      setErrorMsg('학번 4자리를 정확히 입력해 주세요. (예: 1315 ➔ 1학년 3반 15번)');
+      return;
+    }
+    if (!trimmedName) {
+      setErrorMsg('성명을 입력해 주세요.');
+      return;
+    }
+
+    setSession(trimmedId, trimmedName);
+    onLogin({ studentId: trimmedId, name: trimmedName });
   };
 
   return (
@@ -20,40 +42,53 @@ function StartScreen({ onLogin }) {
       <div className="card start-card animate-scale-in">
         <span className="start-icon">🧪</span>
         <h1 className="start-title">알고리즘 랩</h1>
-        <p className="start-subtitle">컴퓨팅 사고력을 키우는 알고리즘 학습</p>
+        <p className="start-subtitle">중학교 정보 · 컴퓨팅 사고력 알고리즘 학습</p>
 
         <form className="start-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label" htmlFor="classCode">학급 (예: 1-3)</label>
+            <label className="form-label" htmlFor="studentId">
+              학번 4자리 <span className="label-sub">(학년·반·번호)</span>
+            </label>
             <input
-              id="classCode"
+              id="studentId"
               className="form-input"
               type="text"
-              placeholder="1-3"
-              value={classCode}
-              onChange={(e) => setClassCode(e.target.value)}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={4}
+              placeholder="예: 1315 (1학년 3반 15번)"
+              value={studentId}
+              onChange={handleStudentIdChange}
               autoFocus
             />
           </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="studentNum">번호 (예: 15)</label>
+            <label className="form-label" htmlFor="studentName">
+              성명
+            </label>
             <input
-              id="studentNum"
+              id="studentName"
               className="form-input"
               type="text"
-              placeholder="15"
-              value={studentNum}
-              onChange={(e) => setStudentNum(e.target.value)}
+              placeholder="이름을 입력하세요 (예: 홍길동)"
+              value={name}
+              onChange={handleNameChange}
             />
           </div>
+
+          {errorMsg && (
+            <div className="start-error-msg animate-fade-in">
+              ⚠️ {errorMsg}
+            </div>
+          )}
 
           <button type="submit" className="btn btn-primary btn-lg start-submit">
             🚀 학습 시작하기
           </button>
         </form>
 
-        <p className="start-footer">초등학교 소프트웨어·인공지능 교육</p>
+        <p className="start-footer">2022 개정 교육과정 중학교 정보</p>
       </div>
     </div>
   );

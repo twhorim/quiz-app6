@@ -86,3 +86,19 @@
   font-size: 14px;
   color: var(--color-text-light);
 }
+
+.start-form .label-sub {
+  font-size: 13px;
+  font-weight: normal;
+  color: var(--color-text-light);
+}
+
+.start-error-msg {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}

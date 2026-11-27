@@ -29,7 +29,7 @@ function Layout({ session, onLogout, children }) {
         <div className="sidebar-header">
           <div className="sidebar-title">🧪 알고리즘 랩</div>
           <div className="sidebar-session">
-            🏫 {session.classCode}반 · {session.studentNum}번
+            👤 {session.studentId ? `${session.studentId} ${session.name}` : `${session.classCode}반 · ${session.studentNum}번`}
           </div>
         </div>
 

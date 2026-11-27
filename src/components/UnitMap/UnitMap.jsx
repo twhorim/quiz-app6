@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { lessons } from '../../data/lessons';
-import { getStudentData } from '../../utils/storage';
+import { getStudentData, getSession } from '../../utils/storage';
 import './UnitMap.css';
 
 function UnitMap() {
   const navigate = useNavigate();
   const studentData = getStudentData();
+  const session = getSession();
 
   const isCompleted = (id) => {
     const lesson = studentData.lessons[id];
@@ -24,7 +25,7 @@ function UnitMap() {
     <div className="unit-map animate-fade-in">
       {/* Welcome */}
       <div className="welcome-header">
-        <h1>👋 학습을 시작해 볼까요?</h1>
+        <h1>👋 {session?.name ? `${session.name} 학생, ` : ''}학습을 시작해 볼까요?</h1>
         <p>아래 차시를 클릭하여 알고리즘의 세계를 탐험하세요!</p>
       </div>
 
