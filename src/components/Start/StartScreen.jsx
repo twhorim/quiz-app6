@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setSession } from '../../utils/storage';
+import { config } from '../../config';
 import './StartScreen.css';
 
 function StartScreen({ onLogin }) {
@@ -101,6 +102,9 @@ function StartScreen({ onLogin }) {
         </div>
 
         <p className="start-footer">2022 개정 교육과정 중학교 정보 · for vibecoding 5차시</p>
+        <div className="start-version-tag">
+          🚀 업데이트 버전: <strong>{config.appVersion}</strong>
+        </div>
       </div>
     </div>
   );

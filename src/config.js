@@ -12,6 +12,9 @@
  */
 
 export const config = {
+  // 앱 배포 확인용 버전
+  appVersion: 'v05',
+
   // 구글 Apps Script 웹 앱 배포 URL
   googleSheetUrl:
     import.meta.env.VITE_GOOGLE_SHEET_URL ||
