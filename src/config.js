@@ -12,6 +12,8 @@
  */
 
 export const config = {
-  // 구글 Apps Script 웹 앱 배포 URL (배포 후 아래 빈따옴표 안에 URL을 넣어주세요)
-  googleSheetUrl: import.meta.env.VITE_GOOGLE_SHEET_URL || '',
+  // 구글 Apps Script 웹 앱 배포 URL
+  googleSheetUrl:
+    import.meta.env.VITE_GOOGLE_SHEET_URL ||
+    'https://script.google.com/macros/s/AKfycbxZ3jUm7l6wXvLRk8yLDA_pF84wdotZiS6C804X75inlrqd3Gbn_bYDqgfeLvRUR10lcw/exec',
 };
