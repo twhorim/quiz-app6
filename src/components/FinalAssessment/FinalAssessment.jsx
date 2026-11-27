@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { finalQuiz } from '../../data/quizzes'
-import { saveFinalResult, getStudentData } from '../../utils/storage'
+import { saveFinalResult, getStudentData, getSession } from '../../utils/storage'
+import { sendToGoogleSheet } from '../../utils/sheetService'
 import MultipleChoice from '../Quiz/MultipleChoice'
 import OXQuestion from '../Quiz/OXQuestion'
 import ShortAnswer from '../Quiz/ShortAnswer'
@@ -65,6 +66,7 @@ export default function FinalAssessment() {
     const correctCount = answers.filter(Boolean).length
     const scorePercent = Math.round((correctCount / objectiveQuestions.length) * 100)
 
+    // 1. Save to local storage
     saveFinalResult({
       score: scorePercent,
       correctCount,
@@ -72,6 +74,18 @@ export default function FinalAssessment() {
       essayAnswer: essayText,
       answers,
     })
+
+    // 2. Background sync to Google Sheet
+    const session = getSession()
+    if (session) {
+      sendToGoogleSheet({
+        type: 'final',
+        studentId: session.studentId,
+        name: session.name,
+        score: scorePercent,
+        essayAnswer: essayText,
+      })
+    }
 
     setShowResult(true)
   }

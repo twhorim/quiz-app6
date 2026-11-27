@@ -2,7 +2,8 @@ import { useState, lazy, Suspense } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { lessons } from '../../data/lessons'
 import { lessonQuizzes } from '../../data/quizzes'
-import { saveLessonResult, getStudentData } from '../../utils/storage'
+import { saveLessonResult, getStudentData, getSession } from '../../utils/storage'
+import { sendToGoogleSheet } from '../../utils/sheetService'
 import LearningObjective from './LearningObjective'
 import ConceptCard from './ConceptCard'
 import Quiz from '../Quiz/Quiz'
@@ -80,14 +81,31 @@ export default function LessonScreen() {
   }
 
   const handleReflectionSubmit = (text) => {
-    // Save to localStorage
+    const finalScore = quizResult ? Math.round((quizResult.score / quizResult.total) * 100) : 100
+
+    // 1. Save to local storage
     saveLessonResult(id, {
-      quizScore: quizResult ? Math.round((quizResult.score / quizResult.total) * 100) : 100,
+      quizScore: finalScore,
       quizAnswers: quizResult ? quizResult.answers : [],
       understanding,
       reflection: text,
       activityCompleted: true,
     })
+
+    // 2. Background sync to Google Sheet (if configured)
+    const session = getSession()
+    if (session) {
+      sendToGoogleSheet({
+        type: 'lesson',
+        studentId: session.studentId,
+        name: session.name,
+        lessonId: id,
+        quizScore: finalScore,
+        understanding,
+        reflection: text,
+      })
+    }
+
     setCompleted(true)
   }
 
