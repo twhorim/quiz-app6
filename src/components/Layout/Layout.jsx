@@ -76,6 +76,9 @@ function Layout({ session, onLogout, children }) {
 
         {/* Footer */}
         <div className="sidebar-footer">
+          <Link to="/teacher" className="teacher-access-link">
+            🔒 선생님 결과 확인
+          </Link>
           <button className="btn logout-btn" onClick={handleLogout}>
             🚪 로그아웃
           </button>

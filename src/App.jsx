@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { getSession } from './utils/storage'
 import StartScreen from './components/Start/StartScreen'
 import Layout from './components/Layout/Layout'
@@ -7,6 +7,7 @@ import UnitMap from './components/UnitMap/UnitMap'
 import LessonScreen from './components/Lesson/LessonScreen'
 import RecordsScreen from './components/Records/RecordsScreen'
 import FinalAssessment from './components/FinalAssessment/FinalAssessment'
+import TeacherDashboard from './components/Teacher/TeacherDashboard'
 
 function App() {
   const [session, setSessionState] = useState(getSession())
@@ -19,27 +20,30 @@ function App() {
     setSessionState(null)
   }
 
-  if (!session) {
-    return (
-      <>
-        <MinScreenGuard />
-        <StartScreen onLogin={handleLogin} />
-      </>
-    )
-  }
-
   return (
     <>
       <MinScreenGuard />
-      <Layout session={session} onLogout={handleLogout}>
-        <Routes>
-          <Route path="/" element={<UnitMap />} />
-          <Route path="/lesson/:lessonId" element={<LessonScreen />} />
-          <Route path="/final" element={<FinalAssessment />} />
-          <Route path="/records" element={<RecordsScreen />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/teacher" element={<TeacherDashboard />} />
+        {!session ? (
+          <Route path="*" element={<StartScreen onLogin={handleLogin} />} />
+        ) : (
+          <Route
+            path="/*"
+            element={
+              <Layout session={session} onLogout={handleLogout}>
+                <Routes>
+                  <Route path="/" element={<UnitMap />} />
+                  <Route path="/lesson/:lessonId" element={<LessonScreen />} />
+                  <Route path="/final" element={<FinalAssessment />} />
+                  <Route path="/records" element={<RecordsScreen />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </Layout>
+            }
+          />
+        )}
+      </Routes>
     </>
   )
 }

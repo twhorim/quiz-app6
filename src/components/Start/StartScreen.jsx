@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { setSession } from '../../utils/storage';
 import './StartScreen.css';
 
 function StartScreen({ onLogin }) {
+  const navigate = useNavigate();
   const [studentId, setStudentId] = useState('');
   const [name, setName] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -87,6 +89,16 @@ function StartScreen({ onLogin }) {
             🚀 학습 시작하기
           </button>
         </form>
+
+        <div className="start-teacher-link-wrap">
+          <button
+            type="button"
+            className="btn btn-ghost start-teacher-btn"
+            onClick={() => navigate('/teacher')}
+          >
+            🔒 선생님 결과 확인
+          </button>
+        </div>
 
         <p className="start-footer">2022 개정 교육과정 중학교 정보 · for vibecoding 5차시</p>
       </div>

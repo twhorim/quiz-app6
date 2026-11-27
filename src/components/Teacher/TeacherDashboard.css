@@ -1,0 +1,333 @@
+/* ===== Teacher Dashboard Styles ===== */
+
+/* Password Gate */
+.teacher-auth-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 50%, #FEF3C7 100%);
+  padding: var(--space-lg);
+}
+
+.teacher-auth-card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: var(--space-2xl) var(--space-xl);
+}
+
+.auth-lock-icon {
+  font-size: 54px;
+  margin-bottom: var(--space-sm);
+}
+
+.auth-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.auth-desc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.auth-pin-input {
+  letter-spacing: 8px;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.auth-error-msg {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Dashboard */
+.teacher-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.td-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.td-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.td-desc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.td-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-bg);
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.stat-num {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+}
+
+/* Toolbar */
+.td-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.toolbar-left,
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sync-msg {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Table */
+.td-table-card {
+  padding: var(--space-md);
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.td-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 15px;
+}
+
+.td-table th {
+  background: #F1F5F9;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.td-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.td-table tr:hover {
+  background: #F8FAFC;
+}
+
+.table-lesson-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cell-score {
+  color: var(--color-primary-dark);
+}
+
+.cell-reflection-snippet {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.essay-snippet {
+  font-size: 13px;
+  color: var(--color-text);
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.final-score-badge {
+  background: #FEF3C7;
+  color: #B45309;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.td-empty-box {
+  text-align: center;
+  padding: var(--space-2xl);
+  color: var(--color-text-secondary);
+}
+
+.td-empty-box .empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-md);
+}
+
+.student-detail-modal {
+  width: 100%;
+  max-width: 780px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: var(--space-xl);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.modal-close-btn {
+  background: transparent;
+  font-size: 20px;
+  color: var(--color-text-light);
+  padding: 4px 8px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.detail-lesson-box {
+  padding: var(--space-md);
+  background: var(--color-bg);
+}
+
+.detail-lesson-title {
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: var(--color-primary-dark);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.detail-row-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.reflection-quote {
+  background: white;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-text);
+}
+
+.final-detail-box {
+  padding: var(--space-md);
+  background: #FFFBEB;
+  border-color: #FCD34D;
+}
+
+.essay-full-text {
+  background: white;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+}
+
+.text-muted { color: var(--color-text-light); }
+.text-info { color: var(--color-primary); }
+.text-success { color: var(--color-success); }
+.text-error { color: var(--color-error); }

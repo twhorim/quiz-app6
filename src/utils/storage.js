@@ -86,3 +86,42 @@ function createEmptyData() {
     finalAssessment: null,
   };
 }
+
+
+/** Get all students data from localStorage */
+export function getAllStudentsData() {
+  const students = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(STORAGE_PREFIX) && key !== `${STORAGE_PREFIX}session`) {
+      try {
+        const raw = localStorage.getItem(key);
+        const data = JSON.parse(raw);
+        const suffix = key.replace(STORAGE_PREFIX, '');
+        const parts = suffix.split('_');
+        const studentId = parts[0] || '';
+        const name = parts.slice(1).join('_') || '';
+        students.push({
+          studentId,
+          name,
+          ...data,
+        });
+      } catch {
+        // Skip malformed entries
+      }
+    }
+  }
+  return students.sort((a, b) => a.studentId.localeCompare(b.studentId));
+}
+
+/** Clear all student records from localStorage */
+export function clearAllStudentsData() {
+  const keysToRemove = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith(STORAGE_PREFIX) && key !== `${STORAGE_PREFIX}session`) {
+      keysToRemove.push(key);
+    }
+  }
+  keysToRemove.forEach((k) => localStorage.removeItem(k));
+}
