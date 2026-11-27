@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getAllStudentsData, clearAllStudentsData } from '../../utils/storage'
+import { getAllStudentsData, clearAllStudentsData, seedSampleData } from '../../utils/storage'
 import { sendToGoogleSheet } from '../../utils/sheetService'
 import { config } from '../../config'
 import './TeacherDashboard.css'
@@ -16,13 +16,41 @@ export default function TeacherDashboard() {
   const [pinError, setPinError] = useState('')
 
   const [students, setStudents] = useState([])
+  const [dataSource, setDataSource] = useState('local') // 'sheet' | 'local'
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedStudent, setSelectedStudent] = useState(null)
   const [syncStatus, setSyncStatus] = useState(null)
 
-  // Load students data
-  const loadData = () => {
-    const list = getAllStudentsData()
-    setStudents(list)
+  // Load students data: tries Google Sheet first, falls back to LocalStorage
+  const loadData = async () => {
+    setIsLoading(true)
+    let sheetDataLoaded = false
+
+    // 1. Try to fetch from Google Sheet
+    if (config.googleSheetUrl) {
+      try {
+        const res = await fetch(config.googleSheetUrl, { method: 'GET' })
+        if (res.ok) {
+          const json = await res.json()
+          if (json.result === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+            setStudents(json.data)
+            setDataSource('sheet')
+            sheetDataLoaded = true
+          }
+        }
+      } catch (err) {
+        // Fallback silently
+      }
+    }
+
+    // 2. If no data from sheet, load from this device's LocalStorage
+    if (!sheetDataLoaded) {
+      const list = getAllStudentsData()
+      setStudents(list)
+      setDataSource('local')
+    }
+
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -39,7 +67,7 @@ export default function TeacherDashboard() {
       setIsAuthenticated(true)
       setPinError('')
     } else {
-      setPinError('비밀번호가 올바르지 않습니다. 다시 입력해 주세요.')
+      setPinError('비밀번호가 올바르지 않습니다. (비밀번호: 8688)')
       setPinInput('')
     }
   }
@@ -52,11 +80,23 @@ export default function TeacherDashboard() {
 
   // Clear all data
   const handleClearAll = () => {
-    if (window.confirm('정말로 이 기기에 저장된 모든 학생 기록을 초기화하시겠습니까?')) {
+    if (window.confirm('이 기기에 저장된 모든 학생 기록을 초기화하시겠습니까?')) {
       clearAllStudentsData()
       loadData()
-      alert('모든 학생 기록이 초기화되었습니다.')
+      alert('기록이 초기화되었습니다.')
     }
+  }
+
+  // Create sample student records for demonstration
+  const handleSeedSamples = () => {
+    seedSampleData()
+    loadData()
+    alert('가상 학생 3명(김민준, 이서연, 홍길동)의 학습 데이터가 생성되었습니다!')
+  }
+
+  // Open Google Sheet in new tab
+  const handleOpenGoogleSheet = () => {
+    window.open('https://sheets.google.com', '_blank')
   }
 
   // Test Google Sheet connection
@@ -166,7 +206,7 @@ export default function TeacherDashboard() {
               type="password"
               inputMode="numeric"
               maxLength={8}
-              placeholder="비밀번호 4자리 입력"
+              placeholder="비밀번호 입력 (8688)"
               value={pinInput}
               onChange={(e) => setPinInput(e.target.value)}
               className="form-input auth-pin-input"
@@ -194,7 +234,7 @@ export default function TeacherDashboard() {
       {/* Top Header */}
       <div className="td-header card">
         <div className="td-header-left">
-          <span className="badge badge-accent">관리자 모드</span>
+          <span className="badge badge-accent">선생님 관리자 모드</span>
           <h1 className="td-title">🎓 학생 학습 결과 대시보드</h1>
           <p className="td-desc">
             학생들의 차시별 형성평가 점수, 이해도 신호등, 성찰 내용 및 단원평가 결과를 확인합니다.
@@ -203,14 +243,14 @@ export default function TeacherDashboard() {
 
         <div className="td-header-right">
           <div className="stat-pill">
-            <span className="stat-label">총 참여 학생</span>
+            <span className="stat-label">조회된 학생 수</span>
             <span className="stat-num">{students.length}명</span>
           </div>
 
           <div className="stat-pill">
-            <span className="stat-label">구글 시트 연동</span>
-            <span className="stat-val font-bold text-success">
-              {config.googleSheetUrl ? '🟢 연동 중' : '⚪ 미설정'}
+            <span className="stat-label">데이터 소스</span>
+            <span className="stat-val font-bold text-primary">
+              {dataSource === 'sheet' ? '☁️ 구글 시트 연동' : '💻 이 기기 로컬 저장소'}
             </span>
           </div>
 
@@ -223,14 +263,17 @@ export default function TeacherDashboard() {
       {/* Action Toolbar */}
       <div className="td-toolbar card">
         <div className="toolbar-left">
-          <button className="btn btn-primary" onClick={handleExportCSV}>
-            📥 엑셀(CSV) 파일로 다운로드
+          <button className="btn btn-accent" onClick={handleOpenGoogleSheet}>
+            📊 구글 스프레드시트 열기
           </button>
-          <button className="btn btn-outline" onClick={loadData}>
-            🔄 새로고침
+          <button className="btn btn-primary" onClick={handleExportCSV} disabled={students.length === 0}>
+            📥 엑셀(CSV) 다운로드
+          </button>
+          <button className="btn btn-outline" onClick={loadData} disabled={isLoading}>
+            {isLoading ? '불러오는 중...' : '🔄 새로고침'}
           </button>
           <button className="btn btn-outline" onClick={handleTestSync} disabled={syncStatus === 'sending'}>
-            🚀 구글 시트 연동 테스트
+            🚀 구글 시트 연결 테스트
           </button>
 
           {syncStatus === 'sending' && <span className="sync-msg text-info">전송 중...</span>}
@@ -239,8 +282,11 @@ export default function TeacherDashboard() {
         </div>
 
         <div className="toolbar-right">
+          <button className="btn btn-outline" onClick={handleSeedSamples} title="테스트용 가상 학생 3명을 생성합니다">
+            🧪 가상 학생 3명 생성
+          </button>
           <button className="btn btn-ghost text-error" onClick={handleClearAll} disabled={students.length === 0}>
-            🗑️ 전체 기록 초기화
+            🗑️ 기록 비우기
           </button>
         </div>
       </div>
@@ -250,8 +296,20 @@ export default function TeacherDashboard() {
         {students.length === 0 ? (
           <div className="td-empty-box">
             <span className="empty-icon">📂</span>
-            <h3>아직 제출된 학생 데이터가 없습니다.</h3>
-            <p>학생이 차시 학습을 완료하거나 단원평가를 제출하면 여기에 실시간으로 표시됩니다.</p>
+            <h3>현재 이 기기에 표시할 학생 데이터가 없습니다.</h3>
+            <p className="empty-explanation">
+              💡 <strong>왜 데이터가 바로 안 보이나요?</strong><br />
+              학생들이 <strong>각자의 태블릿 기기</strong>에서 제출한 결과는 학생 기기가 아니라 <strong>선생님의 구글 스프레드시트</strong>에 실시간으로 모이고 있습니다.<br />
+              상단의 <strong>[📊 구글 스프레드시트 열기]</strong> 버튼을 누르시면 학생 전원의 결과가 모인 엑셀 시트를 바로 확인하실 수 있습니다.
+            </p>
+            <div className="empty-actions mt-md">
+              <button className="btn btn-accent btn-lg" onClick={handleOpenGoogleSheet}>
+                📊 구글 스프레드시트 확인하기
+              </button>
+              <button className="btn btn-primary btn-lg" onClick={handleSeedSamples}>
+                🧪 가상 학생 3명 데이터 생성해보기
+              </button>
+            </div>
           </div>
         ) : (
           <div className="table-wrapper">

@@ -331,3 +331,24 @@
 .text-info { color: var(--color-primary); }
 .text-success { color: var(--color-success); }
 .text-error { color: var(--color-error); }
+
+
+.empty-explanation {
+  max-width: 600px;
+  margin: var(--space-md) auto 0;
+  line-height: 1.6;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.empty-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
