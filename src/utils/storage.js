@@ -74,6 +74,18 @@ export function saveFinalResult(result) {
   return data;
 }
 
+/** Save essay assignment answers */
+export function saveEssayAssignments(essays) {
+  const data = getStudentData();
+  data.essayAssignments = {
+    ...data.essayAssignments,
+    ...essays,
+    completedAt: new Date().toISOString(),
+  };
+  saveStudentData(data);
+  return data;
+}
+
 /** Create empty data structure */
 function createEmptyData() {
   return {
@@ -84,6 +96,7 @@ function createEmptyData() {
       4: { quizAnswers: [], quizScore: null, understanding: null, reflection: '', activityCompleted: false },
     },
     finalAssessment: null,
+    essayAssignments: null,
   };
 }
 
@@ -143,6 +156,12 @@ export function seedSampleData() {
         score: 100,
         essayAnswer: '라면 끓일 때 물 끓이기(순차), 스프 맵기 선택(선택), 4분간 끓이기(반복)가 쓰입니다.',
       },
+      essayAssignments: {
+        1: '문제 분해는 복잡한 문제를 작은 단위의 하위 문제로 나누는 과정입니다. 예를 들어 자판기 프로그램에서 1) 금액 투입 및 잔액 계산, 2) 음료수 재고 및 선택 가능 여부 확인, 3) 선택 음료 배출 및 거스름돈 반환 단계로 나누어 각각 알고리즘을 작성하면 오류를 줄이고 개발하기 쉽습니다.',
+        2: '신호등 건너기: 1) 보행자 버튼 누르고 대기(순차), 2) 초록불인지 확인하고 빨간불이면 멈춤(선택), 3) 신호등이 깜빡이는 동안 빠르게 건너며 남은 시간 카운트다운(반복) 구조가 결합되어 있습니다.',
+        3: '변수는 하나의 값만 기억할 수 있는 상자이고, 리스트는 여러 개의 데이터를 순서대로 한 묶음으로 보관하는 사물함입니다. 학생 한 명의 점수는 변수가 적합하지만, 반 전체 30명의 성적을 처리할 때는 개별 변수를 30개 만드는 것보다 리스트를 사용하는 것이 훨씬 효율적입니다.',
+        completedAt: new Date().toISOString(),
+      },
     },
     {
       studentId: '1302',
@@ -156,6 +175,12 @@ export function seedSampleData() {
       finalAssessment: {
         score: 80,
         essayAnswer: '아침 기상 후 세수하기(순차), 비 오면 우산 챙기기(선택), 버스 올 때까지 기다리기(반복)',
+      },
+      essayAssignments: {
+        1: '도서관 책 찾기 프로그램을 분해하면 1단계: 검색어 입력받기, 2단계: 데이터베이스에서 일치 도서 탐색, 3단계: 도서 청구기호 및 서가 위치 화면 출력으로 나눌 수 있습니다.',
+        2: '자동문 센서 동작: 문 앞에 물체가 감지되었는지 조건 판단(선택), 감지되면 열고 3초 대기(순차), 물체가 벗어날 때까지 계속 감지 상태 반복 확인(반복)합니다.',
+        3: '변수는 단일 값(예: 나의 현재 레벨), 리스트는 여러 값(예: 내가 획득한 아이템 목록)을 저장할 때 사용합니다.',
+        completedAt: new Date().toISOString(),
       },
     },
     {

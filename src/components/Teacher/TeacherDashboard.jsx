@@ -161,6 +161,9 @@ export default function TeacherDashboard() {
       '4차시 성찰',
       '단원평가 점수',
       '단원평가 서술형답변',
+      '서술형1(문제분해)',
+      '서술형2(제어구조)',
+      '서술형3(변수·리스트)',
     ]
 
     const getLightText = (level) => {
@@ -176,6 +179,10 @@ export default function TeacherDashboard() {
       const l3 = s.lessons?.[3] || {}
       const l4 = s.lessons?.[4] || {}
       const final = s.finalAssessment || {}
+      const essays = s.essayAssignments || {}
+      const e1 = essays[1] || essays.essay1 || ''
+      const e2 = essays[2] || essays.essay2 || ''
+      const e3 = essays[3] || essays.essay3 || ''
 
       return [
         s.studentId,
@@ -194,6 +201,9 @@ export default function TeacherDashboard() {
         `"${(l4.reflection || '').replace(/"/g, '""')}"`,
         final.score !== null && final.score !== undefined ? `${final.score}점` : '-',
         `"${(final.essayAnswer || '').replace(/"/g, '""')}"`,
+        `"${e1.replace(/"/g, '""')}"`,
+        `"${e2.replace(/"/g, '""')}"`,
+        `"${e3.replace(/"/g, '""')}"`,
       ]
     })
 
@@ -416,9 +426,13 @@ export default function TeacherDashboard() {
                         )}
                       </td>
                       <td>
-                        {final && final.essayAnswer ? (
+                        {s.essayAssignments && (s.essayAssignments[1] || s.essayAssignments.essay1) ? (
+                          <span className="badge badge-success font-bold" title="서술형 3문항 완료">
+                            ✍️ 서술형 완료
+                          </span>
+                        ) : final && final.essayAnswer ? (
                           <span className="essay-snippet" title={final.essayAnswer}>
-                            {final.essayAnswer.slice(0, 25)}...
+                            {final.essayAnswer.slice(0, 20)}...
                           </span>
                         ) : (
                           <span className="text-muted">-</span>
@@ -491,6 +505,35 @@ export default function TeacherDashboard() {
                     )
                   })}
                 </div>
+              </div>
+
+              {/* Essay Assignments (3 Questions) */}
+              <div className="detail-section mt-md">
+                <h3>✍️ 서술형 수행 과제 (3문항)</h3>
+                {selectedStudent.essayAssignments && (selectedStudent.essayAssignments[1] || selectedStudent.essayAssignments.essay1) ? (
+                  <div className="essay-detail-list">
+                    <div className="essay-detail-item card">
+                      <div className="essay-item-title font-bold">Q1. 문제 분해와 알고리즘 설계</div>
+                      <div className="essay-item-body">
+                        {selectedStudent.essayAssignments[1] || selectedStudent.essayAssignments.essay1 || '(미작성)'}
+                      </div>
+                    </div>
+                    <div className="essay-detail-item card mt-xs">
+                      <div className="essay-item-title font-bold">Q2. 제어 구조(순차·선택·반복) 분석</div>
+                      <div className="essay-item-body">
+                        {selectedStudent.essayAssignments[2] || selectedStudent.essayAssignments.essay2 || '(미작성)'}
+                      </div>
+                    </div>
+                    <div className="essay-detail-item card mt-xs">
+                      <div className="essay-item-title font-bold">Q3. 변수와 리스트의 차이점 및 필요성</div>
+                      <div className="essay-item-body">
+                        {selectedStudent.essayAssignments[3] || selectedStudent.essayAssignments.essay3 || '(미작성)'}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-muted">아직 서술형 과제를 제출하지 않았습니다.</p>
+                )}
               </div>
 
               <div className="detail-section mt-md">

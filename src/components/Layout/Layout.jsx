@@ -65,6 +65,15 @@ function Layout({ session, onLogout, children }) {
             <span>단원 마무리</span>
           </Link>
 
+          <Link
+            to="/essay"
+            className={`nav-link ${isActive('/essay') ? 'active' : ''}`}
+          >
+            <span>✍️</span>
+            <span>서술형 과제</span>
+            {studentData.essayAssignments?.completedAt && <span className="nav-check">✅</span>}
+          </Link>
+
           <div className="sidebar-divider" />
 
           {/* Records */}

@@ -4,7 +4,7 @@
 
 export const config = {
   // 앱 배포 확인용 버전
-  appVersion: 'v06',
+  appVersion: 'v07',
 
   // 구글 Apps Script 웹 앱 배포 URL (데이터 수합 및 대시보드 조회)
   googleSheetUrl:

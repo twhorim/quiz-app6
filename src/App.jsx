@@ -7,6 +7,7 @@ import UnitMap from './components/UnitMap/UnitMap'
 import LessonScreen from './components/Lesson/LessonScreen'
 import RecordsScreen from './components/Records/RecordsScreen'
 import FinalAssessment from './components/FinalAssessment/FinalAssessment'
+import EssayScreen from './components/Essay/EssayScreen'
 import TeacherDashboard from './components/Teacher/TeacherDashboard'
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/" element={<UnitMap />} />
                   <Route path="/lesson/:lessonId" element={<LessonScreen />} />
                   <Route path="/final" element={<FinalAssessment />} />
+                  <Route path="/essay" element={<EssayScreen />} />
                   <Route path="/records" element={<RecordsScreen />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>

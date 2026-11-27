@@ -93,6 +93,21 @@ function UnitMap() {
             : `아직 ${lessons.length - completedCount}개 차시가 남아 있어요. 모든 차시를 완료하면 열려요!`}
         </p>
       </div>
+
+      {/* Essay Assignment Card */}
+      <div
+        className="card final-card"
+        style={{ marginTop: '16px', background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)', borderColor: '#FCD34D' }}
+        onClick={() => navigate('/essay')}
+      >
+        <span className="final-icon">✍️</span>
+        <div className="final-title" style={{ color: '#B45309' }}>단원 핵심 서술형 과제</div>
+        <p className="final-desc" style={{ color: '#92400E' }}>
+          {studentData.essayAssignments?.completedAt
+            ? '✅ 3문항 서술형 과제 제출 완료! (클릭하여 다시 보기 / 수정)'
+            : '실생활 문제 분해, 제어 구조 분석, 변수와 리스트 3대 핵심 서술형 과제에 도전하세요.'}
+        </p>
+      </div>
     </div>
   );
 }

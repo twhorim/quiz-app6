@@ -1,0 +1,229 @@
+/* ===== Essay Screen Styles ===== */
+
+.essay-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 1050px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.essay-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.essay-main-title {
+  font-size: 26px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.essay-main-desc {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+.essay-submitted-tag {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid var(--color-success);
+}
+
+/* Tabs */
+.essay-nav-tabs {
+  display: flex;
+  gap: 12px;
+}
+
+.essay-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.essay-tab-btn.active {
+  background: var(--color-primary-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.tab-icon {
+  font-size: 20px;
+}
+
+.tab-check {
+  background: var(--color-success);
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+/* Content Card */
+.essay-content-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-xl);
+}
+
+.q-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.q-badge {
+  background: #FEF3C7;
+  color: #B45309;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.q-title-text {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.q-prompt-box {
+  background: #F8FAFC;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.q-prompt-text {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.q-guide-box {
+  background: #EFF6FF;
+  border-left: 4px solid var(--color-primary);
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--color-primary-dark);
+  line-height: 1.6;
+}
+
+.essay-textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.textarea-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.essay-input-area {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 17px;
+  line-height: 1.6;
+  outline: none;
+  resize: vertical;
+  background: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+
+.essay-input-area:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-bg);
+}
+
+.textarea-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.char-count {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.char-warning {
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+/* Sample Answer */
+.sample-answer-box {
+  background: #F0FDF4;
+  border: 2px solid var(--color-success);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sample-badge {
+  background: var(--color-success);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sample-content {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #14532D;
+  white-space: pre-wrap;
+}
+
+/* Actions */
+.essay-bottom-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-lg);
+}
+
+.left-step-buttons {
+  display: flex;
+  gap: 8px;
+}
